@@ -99,3 +99,4 @@ ol.wn{margin:0 0 10px;padding-left:20px;font-size:14px}ol.wn li{margin-bottom:9p
 .tpl{font-weight:700;border-bottom:2.5px solid #d97706;padding-bottom:1px}
 .sw.nofn .ss{background:none}.sw.nofn .lb{display:none}.sw.nofn .lgi{display:none}
 .sw.notpl .tpl{font-weight:inherit;border-bottom:0}.sw.notpl .lgt{display:none}
+.swt{width:100%;border-collapse:collapse;font-size:14.5px;margin:4px 0 8px}.swt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}.swt td:last-child{color:var(--muted);width:34%}

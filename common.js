@@ -83,7 +83,8 @@ function swHtml(w){
     <div class="swctl"><label><input type="checkbox" data-sw="fn" checked> Hiện nhãn và màu theo chức năng câu</label><label><input type="checkbox" data-sw="tpl" checked> Hiện mẫu câu (template)</label></div>
     <div class="swlg"><span class="lgt"><span class="tpl">Mẫu câu (template)</span></span>${used.map(k=>`<span class="ss ss-${k} lgi"><i class="lb">${SWK[k]}</i></span>`).join("")}</div>
     ${w.note?`<p class="desc">${esc(w.note)}</p>`:""}
-    ${w.paras.map(p=>`<div class="swh">${esc(p.h)}</div><p class="swp">${p.s.map(swSent).join(" ")}</p>`).join("")}</div>`;
+    ${w.paras.map(p=>`<div class="swh">${esc(p.h)}</div><p class="swp">${p.s.map(swSent).join(" ")}</p>`).join("")}
+    ${w.tpl?`<div class="swh">${esc(w.tplTitle||"Mẫu câu dễ dùng")}</div><table class="swt"><tbody>${w.tpl.map(r=>`<tr><td><span class="tpl">${esc(r[0])}</span></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`:""}</div>`;
 }
 function sampleCard(u){
   const S=SAMPLES[u.n];
