@@ -100,3 +100,25 @@ ol.wn{margin:0 0 10px;padding-left:20px;font-size:14px}ol.wn li{margin-bottom:9p
 .sw.nofn .ss{background:none}.sw.nofn .lb{display:none}.sw.nofn .lgi{display:none}
 .sw.notpl .tpl{font-weight:inherit;border-bottom:0}.sw.notpl .lgt{display:none}
 .swt{width:100%;border-collapse:collapse;font-size:14.5px;margin:4px 0 8px}.swt td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}.swt td:last-child{color:var(--muted);width:34%}
+
+/* Sample Writing – bố cục mới (dễ nhìn) */
+.sw[data-view="map"] .sxflow{display:none}.sw[data-view="flow"] .sxmap{display:none}
+.swnote{margin:0 0 12px;padding:10px 14px;border-radius:8px;background:var(--soft);font-size:14px;line-height:1.6}
+.sxbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:4px 0 12px}
+.sxseg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.sxv{font:inherit;font-size:14px;font-weight:600;padding:7px 16px;border:0;background:var(--surface);color:var(--ink);cursor:pointer}
+.sxv+.sxv{border-left:1px solid var(--line)}.sxv.on{background:var(--accent);color:var(--accent-ink)}
+.sxck{display:flex;gap:6px;align-items:center;font-size:14px;cursor:pointer}
+.sxp{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.sxh{font-size:13.5px;font-weight:700;color:var(--muted);margin:0 0 10px;letter-spacing:.01em}
+.sxr{display:grid;grid-template-columns:124px 1fr;gap:12px;align-items:start;padding:9px 12px;border-radius:9px;font-size:15.5px;line-height:1.7;margin:0}
+.sxr+.sxr{margin-top:6px}
+.sxl{padding-top:3px}.sxr .lb{display:inline-block;margin:0}
+.sxg{margin:10px 0;padding-left:10px;border-left:4px solid rgb(var(--rgb,100,116,139))}
+.sxg .sxr{margin-top:5px}.sxg .sxr:first-child{margin-top:0}
+.sxg .sxr.sxsub{margin-left:18px}
+.sxg1{--rgb:37,99,235}.sxg2{--rgb:22,163,74}.sxg3{--rgb:147,51,234}
+.sxflow .swh{margin-top:14px}.sxflow .swp{font-size:16px;line-height:1.95}
+.sxtpl{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:4px 14px 10px}.sxtpl summary{cursor:pointer;font-weight:600;padding:8px 0}
+@media(max-width:640px){.sxr{grid-template-columns:1fr;gap:4px}.sxg .sxr.sxsub{margin-left:10px}}
+.sw.notpl .tpl{font-weight:inherit;border-bottom:0}

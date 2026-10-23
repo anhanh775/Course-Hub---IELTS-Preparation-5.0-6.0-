@@ -71,26 +71,35 @@ function writingHtml(u){
 document.addEventListener("click",e=>{const b=e.target.closest(".cb");if(!b)return;const w=b.closest(".wbody"),on=b.getAttribute("aria-expanded")!=="true";w.querySelectorAll(".cb").forEach(x=>x.setAttribute("aria-expanded","false"));w.querySelectorAll(".cp").forEach(p=>p.hidden=true);if(on){b.setAttribute("aria-expanded","true");w.querySelector('.cp[data-k="'+b.dataset.k+'"]').hidden=false;}});
 
 /* ===== Sample Writing: bài mẫu có đánh dấu. Trong chuỗi t, phần {trong ngoặc nhọn} là mẫu câu (template). ===== */
-const SWK={bg:"Câu dẫn",thesis:"Thesis",outline:"Outline",topic:"Topic sentence",idea1:"Idea 1",exp1:"Explain 1",ex1:"Example 1",idea2:"Idea 2",exp2:"Explain 2",ex2:"Example 2",idea3:"Idea 3",exp3:"Explain 3",ex3:"Example 3",res:"Mini-conclusion",sum:"Summary"};
-function swSent(s){
-  const parts=String(s.t).split(/(\{[^}]*\})/).filter(x=>x!=="").map(x=>x[0]==="{"?`<span class="tpl">${esc(x.slice(1,-1))}</span>`:esc(x));
-  return `<span class="ss ss-${esc(s.k)}">${SWK[s.k]?`<i class="lb">${SWK[s.k]}</i>`:""}${parts.join("")}</span>`;
+const SWK={bg:"Câu dẫn",thesis:"Thesis",outline:"Outline",topic:"Topic sentence",idea1:"Idea 1",exp1:"Explain",ex1:"Example",idea2:"Idea 2",exp2:"Explain",ex2:"Example",idea3:"Idea 3",exp3:"Explain",ex3:"Example",res:"Mini-conclusion",sum:"Summary"};
+const swParts=t=>String(t).split(/(\{[^}]*\})/).filter(x=>x!=="").map(x=>x[0]==="{"?`<span class="tpl">${esc(x.slice(1,-1))}</span>`:esc(x)).join("");
+const swRow=s=>`<div class="sxr ss ss-${esc(s.k)}${/^(exp|ex)\d$/.test(s.k)?" sxsub":""}"><div class="sxl"><i class="lb">${SWK[s.k]||""}</i></div><div class="sxt">${swParts(s.t)}</div></div>`;
+function swMap(p){
+  let out="",i=0;const S=p.s;
+  while(i<S.length){
+    const m=/^(idea|exp|ex)(\d)$/.exec(S[i].k);
+    if(m){const num=m[2];let g="";while(i<S.length){const q=/^(idea|exp|ex)(\d)$/.exec(S[i].k);if(!q||q[2]!==num)break;g+=swRow(S[i]);i++;}
+      out+=`<div class="sxg sxg${num}">${g}</div>`;}
+    else{out+=swRow(S[i]);i++;}
+  }
+  return out;
 }
 function swHtml(w){
-  const used=[]; w.paras.forEach(p=>p.s.forEach(s=>{if(SWK[s.k]&&!used.includes(s.k))used.push(s.k)}));
-  return `<div class="sw"><h4>${esc(w.type)}</h4>
+  return `<div class="sw" data-view="map"><h4>${esc(w.type)}</h4>
     <div class="swq"><b>Question:</b> ${esc(w.question)}</div>
-    <div class="swctl"><label><input type="checkbox" data-sw="fn" checked> Hiện nhãn và màu theo chức năng câu</label><label><input type="checkbox" data-sw="tpl" checked> Hiện mẫu câu (template)</label></div>
-    <div class="swlg"><span class="lgt"><span class="tpl">Mẫu câu (template)</span></span>${used.map(k=>`<span class="ss ss-${k} lgi"><i class="lb">${SWK[k]}</i></span>`).join("")}</div>
-    ${w.note?`<p class="desc">${esc(w.note)}</p>`:""}
-    ${w.paras.map(p=>`<div class="swh">${esc(p.h)}</div><p class="swp">${p.s.map(swSent).join(" ")}</p>`).join("")}
-    ${w.tpl?`<div class="swh">${esc(w.tplTitle||"Mẫu câu dễ dùng")}</div><table class="swt"><tbody>${w.tpl.map(r=>`<tr><td><span class="tpl">${esc(r[0])}</span></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`:""}</div>`;
+    ${w.note?`<p class="swnote">${esc(w.note)}</p>`:""}
+    <div class="sxbar"><div class="sxseg" role="tablist"><button class="sxv on" data-v="map">Phân tích cấu trúc</button><button class="sxv" data-v="flow">Đọc liền mạch</button></div>
+      <label class="sxck"><input type="checkbox" data-sw="tpl" checked> Gạch chân mẫu câu</label></div>
+    <div class="sxmap">${w.paras.map(p=>`<section class="sxp"><div class="sxh">${esc(p.h)}</div>${swMap(p)}</section>`).join("")}</div>
+    <div class="sxflow">${w.paras.map(p=>`<div class="swh">${esc(p.h)}</div><p class="swp">${p.s.map(s=>swParts(s.t)).join(" ")}</p>`).join("")}</div>
+    ${w.tpl?`<details class="sxtpl" open><summary>${esc(w.tplTitle||"Mẫu câu dễ dùng")}</summary><table class="swt"><tbody>${w.tpl.map(r=>`<tr><td><span class="tpl">${esc(r[0])}</span></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></details>`:""}</div>`;
 }
 function sampleCard(u){
   const S=SAMPLES[u.n];
-  return `<div class="card" id="sample"><h3>Sample Writing</h3><p class="desc">Bài viết mẫu có đánh dấu mẫu câu và các ý chính (Idea, Explanation, Example) để học theo cấu trúc.</p>${S?S.map(swHtml).join(""):`<p class="desc">Sắp cập nhật</p>`}</div>`;
+  return `<div class="card" id="sample"><h3>Sample Writing</h3><p class="desc">Bài viết mẫu kèm phân tích cấu trúc và mẫu câu để học theo.</p>${S?S.map(swHtml).join(""):`<p class="desc">Sắp cập nhật</p>`}</div>`;
 }
 document.addEventListener("change",e=>{const i=e.target.closest("input[data-sw]");if(i)i.closest(".sw").classList.toggle("no"+i.dataset.sw,!i.checked);});
+document.addEventListener("click",e=>{const b=e.target.closest(".sxv");if(!b)return;const w=b.closest(".sw");w.dataset.view=b.dataset.v;w.querySelectorAll(".sxv").forEach(x=>x.classList.toggle("on",x===b));});
 function renderUnit(n){
   const u = UNITS[n-1];
   $("main").innerHTML = `<div class="card"><h2>Unit ${u.n}: ${esc(u.name)}</h2>${tags(u)}</div>` +
