@@ -81,3 +81,21 @@ ol.wn{margin:0 0 10px;padding-left:20px;font-size:14px}ol.wn li{margin-bottom:9p
 .pt{display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.px{display:block;font-size:15px;line-height:1.7}
 .pc{margin-top:12px;padding:12px 16px;border:1px solid var(--accent);border-radius:10px}.pc[hidden]{display:none}.pc h4{margin:0 0 8px}
 .wl,.pt,.ob span,.rw span,.qp small{text-transform:none;letter-spacing:0;font-family:"Be Vietnam Pro",system-ui,sans-serif}.wl{font-size:13.5px;font-weight:600;color:var(--ink)}.pt,.ob span,.rw span,.qp small{font-size:12.5px;font-weight:600}.cb,.cb b,.band,.cr{font-family:"Be Vietnam Pro",system-ui,sans-serif}.cb{font-size:13px;font-weight:500}.cb b{font-weight:700}
+
+/* Sample Writing */
+.sw{margin-top:14px}.sw h4{margin:0 0 6px;font-size:16px}
+.swq{border-left:3px solid var(--accent);background:var(--bg);padding:10px 14px;border-radius:6px;font-size:14.5px;margin:8px 0 12px}
+.swctl{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;margin:8px 0}.swctl label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.swlg{display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 12px;align-items:center}.lgi{padding:2px 4px}
+.swh{font-size:13.5px;font-weight:600;color:var(--muted);margin:18px 0 4px}
+.swp{margin:0 0 6px;font-size:15.5px;line-height:2.15}
+.ss{--rgb:100,116,139;--a:.14;background:rgba(var(--rgb),var(--a));border-radius:5px;padding:2px 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.lb{font-style:normal;font-size:11px;font-weight:700;line-height:1;border-radius:999px;padding:2px 8px;margin-right:5px;vertical-align:1px;color:#fff;background:rgb(var(--rgb));white-space:nowrap}
+.ss-bg{--rgb:100,116,139}.ss-thesis{--rgb:225,29,72;--a:.16}.ss-outline{--rgb:13,148,136;--a:.16}.ss-topic{--rgb:79,70,229;--a:.18}
+.ss-idea1{--rgb:37,99,235;--a:.28}.ss-exp1{--rgb:37,99,235;--a:.17}.ss-ex1{--rgb:37,99,235;--a:.09}
+.ss-idea2{--rgb:22,163,74;--a:.28}.ss-exp2{--rgb:22,163,74;--a:.17}.ss-ex2{--rgb:22,163,74;--a:.09}
+.ss-idea3{--rgb:147,51,234;--a:.28}.ss-exp3{--rgb:147,51,234;--a:.17}.ss-ex3{--rgb:147,51,234;--a:.09}
+.ss-res{--rgb:234,88,12;--a:.18}.ss-sum{--rgb:100,116,139;--a:.18}
+.tpl{font-weight:700;border-bottom:2.5px solid #d97706;padding-bottom:1px}
+.sw.nofn .ss{background:none}.sw.nofn .lb{display:none}.sw.nofn .lgi{display:none}
+.sw.notpl .tpl{font-weight:inherit;border-bottom:0}.sw.notpl .lgt{display:none}
