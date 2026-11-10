@@ -1,8 +1,8 @@
 /* Dữ liệu của trang unit nằm trong file unitN.html (window.UNIT); danh sách unit và link chung nằm trong config.js */
-const PAGES={}, LINKS={}, ITEMS={}, WRITING={}, TRANS={}, KEYS={}, SAMPLES={}, WKEY={};
+const PAGES={}, LINKS={}, ITEMS={}, WRITING={}, TRANS={}, KEYS={}, SAMPLES={}, WKEY={}, WPDF={};
 (function(){const U=window.UNIT; if(!U) return; const n=U.n;
   LINKS[n]=U.links||{}; ITEMS[n]={practiceL:U.practiceL||[],practiceR:U.practiceR||[]};
-  if(U.writing&&U.writing.length) WRITING[n]=U.writing; if(U.audio&&U.audio.length) TRANS[n]=U.audio; if(U.keys&&U.keys.length) KEYS[n]=U.keys; if(U.sample&&U.sample.length) SAMPLES[n]=U.sample; if(U.wkey&&U.wkey.length) WKEY[n]=U.wkey;})();
+  if(U.writing&&U.writing.length) WRITING[n]=U.writing; if(U.audio&&U.audio.length) TRANS[n]=U.audio; if(U.keys&&U.keys.length) KEYS[n]=U.keys; if(U.sample&&U.sample.length) SAMPLES[n]=U.sample; if(U.wkey&&U.wkey.length) WKEY[n]=U.wkey; if(U.wpdf&&U.wpdf.pages&&U.wpdf.pages.length) WPDF[n]=U.wpdf;})();
 // Mỗi mục: t = tên nút, u = link. Có thể thêm/bớt nút trong từng nhóm.
 const L = (t)=>({t,u:""});
 const SECTIONS = [
@@ -118,6 +118,8 @@ function wkBlock(b){
   return "";
 }
 function wkCard(u){
+  const P=WPDF[u.n];
+  if(P) return `<div class="card" id="wpdf"><div class="vh"><h3 style="margin:0">${esc(P.t||"Writing")}</h3>${P.pdf?`<a class="btn" href="${esc(P.pdf)}" target="_blank" rel="noopener" style="text-decoration:none">Tải PDF</a>`:""}</div>${P.d?`<p class="desc" style="margin:8px 0 0">${esc(P.d)}</p>`:""}${P.pages.map((p,i)=>`<img class="pg" loading="lazy" alt="${esc(P.t||"Writing")} – trang ${i+1}" src="${esc(p)}">`).join("")}</div>`;
   const W=WKEY[u.n]; if(!W) return "";
   return `<div class="card" id="wkey"><h3>Đáp án Writing</h3><p class="desc">Bấm vào từng bài để xem đáp án. Chữ màu đỏ là đáp án.</p>${W.map(t=>`<details class="wk"><summary>${esc(t.t)}</summary><div class="wkb">${t.prompt?`<div class="swq">${esc(t.prompt)}</div>`:""}${t.img?`<img class="wkimg" src="${esc(t.img)}" alt="${esc(t.alt||t.t)}" loading="lazy">`:""}${(t.blocks||[]).map(wkBlock).join("")}</div></details>`).join("")}</div>`;
 }
