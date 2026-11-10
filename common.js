@@ -1,8 +1,8 @@
 /* Dữ liệu của trang unit nằm trong file unitN.html (window.UNIT); danh sách unit và link chung nằm trong config.js */
-const PAGES={}, LINKS={}, ITEMS={}, WRITING={}, TRANS={}, KEYS={}, SAMPLES={};
+const PAGES={}, LINKS={}, ITEMS={}, WRITING={}, TRANS={}, KEYS={}, SAMPLES={}, WKEY={};
 (function(){const U=window.UNIT; if(!U) return; const n=U.n;
   LINKS[n]=U.links||{}; ITEMS[n]={practiceL:U.practiceL||[],practiceR:U.practiceR||[]};
-  if(U.writing&&U.writing.length) WRITING[n]=U.writing; if(U.audio&&U.audio.length) TRANS[n]=U.audio; if(U.keys&&U.keys.length) KEYS[n]=U.keys; if(U.sample&&U.sample.length) SAMPLES[n]=U.sample;})();
+  if(U.writing&&U.writing.length) WRITING[n]=U.writing; if(U.audio&&U.audio.length) TRANS[n]=U.audio; if(U.keys&&U.keys.length) KEYS[n]=U.keys; if(U.sample&&U.sample.length) SAMPLES[n]=U.sample; if(U.wkey&&U.wkey.length) WKEY[n]=U.wkey;})();
 // Mỗi mục: t = tên nút, u = link. Có thể thêm/bớt nút trong từng nhóm.
 const L = (t)=>({t,u:""});
 const SECTIONS = [
@@ -100,11 +100,32 @@ function sampleCard(u){
 }
 document.addEventListener("change",e=>{const i=e.target.closest("input[data-sw]");if(i)i.closest(".sw").classList.toggle("no"+i.dataset.sw,!i.checked);});
 document.addEventListener("click",e=>{const b=e.target.closest(".sxv");if(!b)return;const w=b.closest(".sw");w.dataset.view=b.dataset.v;w.querySelectorAll(".sxv").forEach(x=>x.classList.toggle("on",x===b));});
+
+/* ===== Đáp án Writing: trong chuỗi, phần {trong ngoặc nhọn} là đáp án (chữ đỏ) ===== */
+const wkMark=t=>String(t).split(/(\{[^}]*\})/).filter(x=>x!=="").map(x=>x[0]==="{"?`<span class="ans">${esc(x.slice(1,-1))}</span>`:esc(x)).join("");
+function wkTable(b){
+  const cell=(c,tag)=>{const o=typeof c==="object"&&c!==null&&!Array.isArray(c)?c:{t:c};return `<${tag}${o.rs?` rowspan="${o.rs}"`:""}${o.cs?` colspan="${o.cs}"`:""}>${wkMark(o.t)}</${tag}>`;};
+  return `<div class="wkt"><table>${b.head?`<thead><tr>${b.head.map(h=>cell(h,"th")).join("")}</tr></thead>`:""}<tbody>${b.rows.map(r=>`<tr>${r.map(c=>cell(c,"td")).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function wkBlock(b){
+  if(b.k==="h") return `<h5 class="wkh">${esc(b.t)}</h5>`;
+  if(b.k==="qa") return `<div class="wkqa">${b.rows.map(r=>`<div><span>${esc(r[0])}</span> <span class="ans">${esc(r[1])}</span></div>`).join("")}</div>`;
+  if(b.k==="fill") return `<p class="wkfill">${wkMark(b.t)}</p>`;
+  if(b.k==="list") return `<ul class="wkl">${b.items.map(i=>`<li>${wkMark(i)}</li>`).join("")}</ul>`;
+  if(b.k==="tbl") return wkTable(b);
+  if(b.k==="note") return `<p class="desc">${esc(b.t)}</p>`;
+  if(b.k==="sample") return `<div class="wksm"><div class="wksl">${esc(b.label||"Sample answer")}</div>${b.paras.map(p=>Array.isArray(p)?`<p><b>${esc(p[0])}</b><br>${esc(p[1])}</p>`:`<p>${esc(p)}</p>`).join("")}</div>`;
+  return "";
+}
+function wkCard(u){
+  const W=WKEY[u.n]; if(!W) return "";
+  return `<div class="card" id="wkey"><h3>Đáp án Writing</h3><p class="desc">Bấm vào từng bài để xem đáp án. Chữ màu đỏ là đáp án.</p>${W.map(t=>`<details class="wk"><summary>${esc(t.t)}</summary><div class="wkb">${t.prompt?`<div class="swq">${esc(t.prompt)}</div>`:""}${t.img?`<img class="wkimg" src="${esc(t.img)}" alt="${esc(t.alt||t.t)}" loading="lazy">`:""}${(t.blocks||[]).map(wkBlock).join("")}</div></details>`).join("")}</div>`;
+}
 function renderUnit(n){
   const u = UNITS[n-1];
   $("main").innerHTML = `<div class="card"><h2>Unit ${u.n}: ${esc(u.name)}</h2>${tags(u)}</div>` +
     SECTIONS.map(s=>`<div class="card${s.mark?" mark":""}"><h3>${s.t}</h3><p class="desc">${s.d}</p>
-      ${s.groups?groupsHtml(u):""}${s.k==="writing"&&WRITING[u.n]?writingHtml(u):""}${s.player?playersHtml(u):""}${s.keys?keysHtml(u):""}<div class="list">${(s.groups||(s.k==="writing"&&WRITING[u.n]))?"":((ITEMS[u.n]||{})[s.k]||s.items).map((it,i)=>{const h=url(u.n,s.k,i,it.u);return `<span class="item">${itemHtml(it,h)}</span>`}).join("")}</div></div>`).join("") + sampleCard(u);
+      ${s.groups?groupsHtml(u):""}${s.k==="writing"&&WRITING[u.n]?writingHtml(u):""}${s.player?playersHtml(u):""}${s.keys?keysHtml(u):""}<div class="list">${(s.groups||(s.k==="writing"&&WRITING[u.n]))?"":((ITEMS[u.n]||{})[s.k]||s.items).map((it,i)=>{const h=url(u.n,s.k,i,it.u);return `<span class="item">${itemHtml(it,h)}</span>`}).join("")}</div></div>`).join("") + sampleCard(u) + wkCard(u);
 }
 let TEACHER=false, CUR=0;
 function playersHtml(u){

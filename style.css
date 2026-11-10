@@ -122,3 +122,22 @@ ol.wn{margin:0 0 10px;padding-left:20px;font-size:14px}ol.wn li{margin-bottom:9p
 .sxtpl{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:4px 14px 10px}.sxtpl summary{cursor:pointer;font-weight:600;padding:8px 0}
 @media(max-width:640px){.sxr{grid-template-columns:1fr;gap:4px}.sxg .sxr.sxsub{margin-left:10px}}
 .sw.notpl .tpl{font-weight:inherit;border-bottom:0}
+
+/* Đáp án Writing */
+details.wk{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:var(--bg)}
+details.wk>summary{cursor:pointer;padding:12px 14px;font-weight:600;font-size:15.5px}
+.wkb{padding:2px 16px 16px}
+.wkimg{display:block;max-width:100%;height:auto;margin:10px 0 14px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.wkh{margin:18px 0 6px;font-size:15px}
+.ans{color:#c62828;font-weight:600}
+@media (prefers-color-scheme:dark){.ans{color:#ff8a80}}
+.wkqa>div{padding:5px 0;line-height:1.6}
+.wkfill{line-height:1.85;margin:6px 0}
+.wkl{margin:6px 0 6px 18px;padding:0;line-height:1.75}
+.wkt{overflow-x:auto;margin:8px 0}
+.wkt table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+.wkt th,.wkt td{border:1px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left;line-height:1.55}
+.wkt th{background:var(--soft);font-weight:600}
+.wksm{border-left:4px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.wksl{font-weight:700;font-size:13.5px;margin-bottom:4px;color:var(--muted)}
+.wksm p{margin:6px 0;line-height:1.8;font-size:15.5px}
