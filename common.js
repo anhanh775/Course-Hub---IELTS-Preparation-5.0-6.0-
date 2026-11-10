@@ -71,7 +71,7 @@ function writingHtml(u){
 document.addEventListener("click",e=>{const b=e.target.closest(".cb");if(!b)return;const w=b.closest(".wbody"),on=b.getAttribute("aria-expanded")!=="true";w.querySelectorAll(".cb").forEach(x=>x.setAttribute("aria-expanded","false"));w.querySelectorAll(".cp").forEach(p=>p.hidden=true);if(on){b.setAttribute("aria-expanded","true");w.querySelector('.cp[data-k="'+b.dataset.k+'"]').hidden=false;}});
 
 /* ===== Sample Writing: bài mẫu có đánh dấu. Trong chuỗi t, phần {trong ngoặc nhọn} là mẫu câu (template). ===== */
-const SWK={bg:"Câu dẫn",thesis:"Thesis",outline:"Outline",topic:"Topic sentence",idea1:"Idea 1",exp1:"Explain",ex1:"Example",idea2:"Idea 2",exp2:"Explain",ex2:"Example",idea3:"Idea 3",exp3:"Explain",ex3:"Example",res:"Mini-conclusion",sum:"Summary"};
+const SWK={para:"Paraphrase",ov:"Overview",det:"Chi tiết",bg:"Câu dẫn",thesis:"Thesis",outline:"Outline",topic:"Topic sentence",idea1:"Idea 1",exp1:"Explain",ex1:"Example",idea2:"Idea 2",exp2:"Explain",ex2:"Example",idea3:"Idea 3",exp3:"Explain",ex3:"Example",res:"Mini-conclusion",sum:"Summary"};
 const swParts=t=>String(t).split(/(\{[^}]*\})/).filter(x=>x!=="").map(x=>x[0]==="{"?`<span class="tpl">${esc(x.slice(1,-1))}</span>`:esc(x)).join("");
 const swRow=s=>`<div class="sxr ss ss-${esc(s.k)}${/^(exp|ex)\d$/.test(s.k)?" sxsub":""}"><div class="sxl"><i class="lb">${SWK[s.k]||""}</i></div><div class="sxt">${swParts(s.t)}</div></div>`;
 function swMap(p){
