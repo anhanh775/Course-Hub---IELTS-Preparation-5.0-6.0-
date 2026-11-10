@@ -87,7 +87,7 @@ function swMap(p){
 function swHtml(w){
   const body=`<div class="sw" data-view="map">${w.fold?"":`<h4>${esc(w.type)}</h4>`}
     <div class="swq"><b>Question:</b> ${esc(w.question)}</div>
-    ${w.note?`<p class="swnote">${esc(w.note)}</p>`:""}
+    ${w.img?`<img class="swimg" src="${esc(w.img)}" alt="${esc(w.alt||w.type)}" loading="lazy">`:""}${w.note?`<p class="swnote">${esc(w.note)}</p>`:""}
     <div class="sxbar"><div class="sxseg" role="tablist"><button class="sxv on" data-v="map">Phân tích cấu trúc</button><button class="sxv" data-v="flow">Đọc liền mạch</button></div>
       <label class="sxck"><input type="checkbox" data-sw="tpl" checked> Gạch chân mẫu câu</label></div>
     <div class="sxmap">${w.paras.map(p=>`<section class="sxp"><div class="sxh">${esc(p.h)}</div>${swMap(p)}</section>`).join("")}</div>
