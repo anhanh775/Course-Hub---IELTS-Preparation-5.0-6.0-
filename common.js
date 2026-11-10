@@ -85,18 +85,19 @@ function swMap(p){
   return out;
 }
 function swHtml(w){
-  return `<div class="sw" data-view="map"><h4>${esc(w.type)}</h4>
+  const body=`<div class="sw" data-view="map">${w.fold?"":`<h4>${esc(w.type)}</h4>`}
     <div class="swq"><b>Question:</b> ${esc(w.question)}</div>
     ${w.note?`<p class="swnote">${esc(w.note)}</p>`:""}
     <div class="sxbar"><div class="sxseg" role="tablist"><button class="sxv on" data-v="map">Phân tích cấu trúc</button><button class="sxv" data-v="flow">Đọc liền mạch</button></div>
       <label class="sxck"><input type="checkbox" data-sw="tpl" checked> Gạch chân mẫu câu</label></div>
     <div class="sxmap">${w.paras.map(p=>`<section class="sxp"><div class="sxh">${esc(p.h)}</div>${swMap(p)}</section>`).join("")}</div>
     <div class="sxflow">${w.paras.map(p=>`<div class="swh">${esc(p.h)}</div><p class="swp">${p.s.map(s=>swParts(s.t)).join(" ")}</p>`).join("")}</div>
-    ${w.tpl?`<details class="sxtpl" open><summary>${esc(w.tplTitle||"Mẫu câu dễ dùng")}</summary><table class="swt"><tbody>${w.tpl.map(r=>`<tr><td><span class="tpl">${esc(r[0])}</span></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></details>`:""}</div>`;
+    ${w.tpl?`<details class="sxtpl"${w.fold?"":" open"}><summary>${esc(w.tplTitle||"Mẫu câu dễ dùng")}</summary><table class="swt"><tbody>${w.tpl.map(r=>`<tr><td><span class="tpl">${esc(r[0])}</span></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></details>`:""}</div>`;
+  return w.fold?`<details class="swd"><summary>${esc(w.type)}${w.tag?`<span class="swtag">${esc(w.tag)}</span>`:""}</summary>${body}</details>`:body;
 }
 function sampleCard(u){
   const S=SAMPLES[u.n];
-  return `<div class="card" id="sample"><h3>Sample Writing</h3><p class="desc">Bài viết mẫu kèm phân tích cấu trúc và mẫu câu để học theo.</p>${S?S.map(swHtml).join(""):`<p class="desc">Sắp cập nhật</p>`}</div>`;
+  return `<div class="card" id="sample"><h3>Sample Writing</h3><p class="desc">Bài viết mẫu kèm phân tích cấu trúc và mẫu câu để học theo.${S&&S.some(w=>w.fold)?" Bấm vào từng bài để xem.":""}</p>${S?S.map(swHtml).join(""):`<p class="desc">Sắp cập nhật</p>`}</div>`;
 }
 document.addEventListener("change",e=>{const i=e.target.closest("input[data-sw]");if(i)i.closest(".sw").classList.toggle("no"+i.dataset.sw,!i.checked);});
 document.addEventListener("click",e=>{const b=e.target.closest(".sxv");if(!b)return;const w=b.closest(".sw");w.dataset.view=b.dataset.v;w.querySelectorAll(".sxv").forEach(x=>x.classList.toggle("on",x===b));});
