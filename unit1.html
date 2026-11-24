@@ -28,10 +28,10 @@ window.UNIT = {
  "n": 1,
  "links": {
   "coursebook": [
-   ""
+   "/_blob/unit1-coursebook"
   ],
   "vocab": [
-   "",
+   "/_blob/unit1-vocabulary",
    "unit1/vocab-exercises.html"
   ],
   "audio": [
@@ -1699,5 +1699,21 @@ window.UNIT = {
 };
 </script>
 <script src="common.js"></script>
+<script>
+/* Tài liệu Unit 1: xem trong trang bằng ảnh từng trang (thư mục docs/), không có file PDF để tải. File này tự chứa mọi thứ cần thiết, không cần sửa common.js hay style.css. */
+(function(){
+  const mk=(d,n)=>Array.from({length:n},(_,i)=>"docs/"+d+"/p-"+String(i+1).padStart(2,"0")+".webp");
+  PAGES["/_blob/unit1-coursebook"]=mk("unit1-coursebook",14);
+  PAGES["/_blob/unit1-vocabulary"]=mk("unit1-vocabulary",18);
+  const st=document.createElement("style");
+  st.textContent="#dl{display:none!important}main img{pointer-events:none;-webkit-user-drag:none;user-select:none}@media print{body *{display:none!important}body::before{content:'Tài liệu chỉ xem trên trang web.';display:block;padding:24px}}";
+  document.head.appendChild(st);
+  const nd=()=>document.querySelectorAll("audio").forEach(a=>a.setAttribute("controlsList","nodownload noplaybackrate"));
+  nd(); new MutationObserver(nd).observe(document.getElementById("main"),{childList:true,subtree:true});
+  document.addEventListener("contextmenu",e=>{if(e.target.closest&&e.target.closest("img,audio,#viewer"))e.preventDefault();});
+  document.addEventListener("dragstart",e=>{if(e.target.closest&&e.target.closest("img"))e.preventDefault();});
+  document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&/^[sp]$/i.test(e.key))e.preventDefault();});
+})();
+</script>
 </body>
 </html>
